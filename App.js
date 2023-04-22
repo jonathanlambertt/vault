@@ -1,5 +1,5 @@
 // react/react-native imports
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -57,6 +57,9 @@ const HomeScreen = ({ navigation }) => {
 };
 
 const NewPasswordScreen = ({ navigation }) => {
+  const [description, setDescription] = useState("");
+  const [password, setPassword] = useState("");
+
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -66,7 +69,17 @@ const NewPasswordScreen = ({ navigation }) => {
           </Text>
         </Pressable>
       ),
-      headerRight: () => <Button title="Save" color="#9370DB" />,
+      headerRight: () => (
+        <Button
+          title="Save"
+          color="#9370DB"
+          disabled={
+            description.trim().length !== 0 && password.trim().length !== 0
+              ? false
+              : true
+          }
+        />
+      ),
     });
   });
 
@@ -80,11 +93,14 @@ const NewPasswordScreen = ({ navigation }) => {
           Description
         </Text>
         <TextInput
+          value={description}
+          onChangeText={(text) => setDescription(text)}
           placeholder="What is this password for?"
           selectionColor="#9370DB"
           autoFocus
           spellCheck={false}
           blurOnSubmit={false}
+          placeholderTextColor="#767676"
           style={{
             height: 45,
             borderWidth: 1,
@@ -100,10 +116,13 @@ const NewPasswordScreen = ({ navigation }) => {
           Password
         </Text>
         <TextInput
+          value={password}
+          onChangeText={(text) => setPassword(text)}
           placeholder="Enter password here."
           selectionColor="#9370DB"
           spellCheck={false}
           blurOnSubmit={false}
+          placeholderTextColor="#767676"
           style={{
             height: 45,
             borderWidth: 1,
