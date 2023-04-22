@@ -120,7 +120,6 @@ const NewPasswordScreen = ({ navigation }) => {
 
 export default function App() {
   return (
-<<<<<<< HEAD
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerTitleStyle: { fontSize: 18, color: "#333" } }}
@@ -142,10 +141,6 @@ export default function App() {
           />
         </Stack.Group>
       </Stack.Navigator>
-=======
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>deez</Text>
->>>>>>> a8899744216482c8340e98e0b3f90b611ef10797
       <StatusBar style="auto" />
     </NavigationContainer>
   );
