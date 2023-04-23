@@ -10,6 +10,8 @@ import {
   ScrollView,
   RefreshControl,
 } from "react-native";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 
 // react-navigation imports
 import { NavigationContainer } from "@react-navigation/native";
@@ -25,10 +27,10 @@ const Stack = createNativeStackNavigator();
 const db = SQLite.openDatabase("vault.db");
 
 // components
-const Password = ({ description }) => {
+const Password = ({ description, pKey }) => {
   const fetchPassword = async () => {
     try {
-      const password = await SecureStore.getItemAsync(description);
+      const password = await SecureStore.getItemAsync(pKey);
       console.log(password);
     } catch (error) {}
   };
@@ -101,7 +103,9 @@ const HomeScreen = ({ navigation }) => {
         contentContainerStyle={{ marginTop: 15 }}
         data={passwords}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Password description={item.key} />}
+        renderItem={({ item }) => (
+          <Password description={item.description} pKey={item.key} />
+        )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={loadPasswords} />
         }
@@ -126,15 +130,20 @@ const NewPasswordScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [saveButtonPressed, setSaveButtonPressed] = useState(false);
 
-  const addPassword = () => {
+  const createNewPassword = () => {
+    const key = uuidv4();
+    storePasswordMetaData(key);
+  };
+
+  const storePasswordMetaData = (key) => {
     setSaveButtonPressed(true);
     db.transaction((tx) => {
       tx.executeSql(
-        "insert into password (key) values (?)",
-        [description],
+        "insert into password (description, key) values (?, ?)",
+        [description, key],
         (txObj, resultSet) => {
-          // run when insert is successful
-          storePassword();
+          // store password in secure store when insert is successful
+          storePassword(key);
           navigation.goBack();
         },
         (txObj, error) => console.log(error)
@@ -142,9 +151,9 @@ const NewPasswordScreen = ({ navigation }) => {
     });
   };
 
-  const storePassword = async () => {
+  const storePassword = async (key) => {
     try {
-      await SecureStore.setItemAsync(description, password);
+      await SecureStore.setItemAsync(key, password);
     } catch (error) {}
   };
 
@@ -159,7 +168,7 @@ const NewPasswordScreen = ({ navigation }) => {
       ),
       headerRight: () => (
         <Button
-          onPress={() => addPassword()}
+          onPress={() => createNewPassword()}
           title="Save"
           color="#9370DB"
           disabled={
@@ -231,11 +240,8 @@ export default function App() {
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
-        "create table if not exists password (id integer primary key not null, key text);"
+        "create table if not exists password (id integer primary key not null, description text, key text);"
       );
-
-      // uncomment to delete all saved data (REMOVE BEFORE RELEASING)
-      //tx.executeSql("delete from password;");
     });
   }, []);
 
