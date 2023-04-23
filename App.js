@@ -22,6 +22,7 @@ import { StatusBar } from "expo-status-bar";
 import { Feather } from "@expo/vector-icons";
 import * as SQLite from "expo-sqlite";
 import * as SecureStore from "expo-secure-store";
+import { useFonts } from "expo-font";
 
 const Stack = createNativeStackNavigator();
 const db = SQLite.openDatabase("vault.db");
@@ -70,6 +71,29 @@ const Password = ({ description, pKey }) => {
       </View>
     </View>
   );
+};
+const Logo = () => {
+  const [loaded] = useFonts({
+    CreteRound: require("./assets/CreteRound-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  } else {
+    return (
+      <Text
+        style={{
+          fontFamily: "CreteRound",
+          fontSize: 29,
+          fontWeight: "bold",
+          color: "#333",
+          marginBottom: 5,
+        }}
+      >
+        Vault
+      </Text>
+    );
+  }
 };
 
 // screens
@@ -264,7 +288,7 @@ export default function App() {
             name="Home"
             component={HomeScreen}
             options={{
-              title: "Vault",
+              headerTitle: () => <Logo />,
             }}
           />
         </Stack.Group>
