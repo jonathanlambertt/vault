@@ -87,7 +87,7 @@ const Logo = () => {
           fontSize: 29,
           fontWeight: "bold",
           color: "#333",
-          marginBottom: 5,
+          marginBottom: 3,
         }}
       >
         Vault
