@@ -23,6 +23,33 @@ import * as SQLite from "expo-sqlite";
 const Stack = createNativeStackNavigator();
 const db = SQLite.openDatabase("vault.db");
 
+// components
+const Password = ({ description }) => {
+  return (
+    <View style={{ marginBottom: 20 }}>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 1, marginLeft: 25 }}>
+          <Text
+            style={{
+              fontSize: 18,
+              fontWeight: 600,
+              marginBottom: 4,
+              color: "#333",
+            }}
+          >
+            {description}
+          </Text>
+          <Text style={{ fontSize: 16, color: "#767676" }}>Show password</Text>
+        </View>
+        <View style={{ marginRight: 25, justifyContent: "center" }}>
+          <Button title="Edit" color="#9370DB" />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+// screens
 const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [passwords, setPasswords] = useState([]);
@@ -59,9 +86,10 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: "#fff" }}>
       <FlatList
+        contentContainerStyle={{ marginTop: 15 }}
         data={passwords}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text>{item.key}</Text>}
+        renderItem={({ item }) => <Password description={item.key} />}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={loadPasswords} />
         }
@@ -81,7 +109,6 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
-
 const NewPasswordScreen = ({ navigation }) => {
   const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
@@ -142,7 +169,6 @@ const NewPasswordScreen = ({ navigation }) => {
           placeholder="What is this password for?"
           selectionColor="#9370DB"
           autoFocus
-          spellCheck={false}
           blurOnSubmit={false}
           placeholderTextColor="#767676"
           style={{
