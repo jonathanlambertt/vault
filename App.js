@@ -28,12 +28,23 @@ const db = SQLite.openDatabase("vault.db");
 
 // components
 const Password = ({ description, pKey }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [text, setText] = useState("Show password");
+
   const fetchPassword = async () => {
     try {
       const password = await SecureStore.getItemAsync(pKey);
-      console.log(password);
+      setText(password);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (showPassword) {
+      fetchPassword();
+    } else {
+      setText("Show password");
+    }
+  }, [showPassword]);
 
   return (
     <View style={{ marginBottom: 20 }}>
@@ -49,10 +60,8 @@ const Password = ({ description, pKey }) => {
           >
             {description}
           </Text>
-          <Pressable onPress={() => fetchPassword()}>
-            <Text style={{ fontSize: 16, color: "#767676" }}>
-              Show password
-            </Text>
+          <Pressable onPress={() => setShowPassword(!showPassword)}>
+            <Text style={{ fontSize: 16, color: "#767676" }}>{text}</Text>
           </Pressable>
         </View>
         <View style={{ marginRight: 25, justifyContent: "center" }}>
