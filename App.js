@@ -19,12 +19,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { Feather } from "@expo/vector-icons";
 import * as SQLite from "expo-sqlite";
+import * as SecureStore from "expo-secure-store";
 
 const Stack = createNativeStackNavigator();
 const db = SQLite.openDatabase("vault.db");
 
 // components
 const Password = ({ description }) => {
+  const fetchPassword = async () => {
+    try {
+      const password = await SecureStore.getItemAsync(description);
+      console.log(password);
+    } catch (error) {}
+  };
+
   return (
     <View style={{ marginBottom: 20 }}>
       <View style={{ flexDirection: "row" }}>
@@ -39,7 +47,11 @@ const Password = ({ description }) => {
           >
             {description}
           </Text>
-          <Text style={{ fontSize: 16, color: "#767676" }}>Show password</Text>
+          <Pressable onPress={() => fetchPassword()}>
+            <Text style={{ fontSize: 16, color: "#767676" }}>
+              Show password
+            </Text>
+          </Pressable>
         </View>
         <View style={{ marginRight: 25, justifyContent: "center" }}>
           <Button title="Edit" color="#9370DB" />
@@ -121,11 +133,19 @@ const NewPasswordScreen = ({ navigation }) => {
         "insert into password (key) values (?)",
         [description],
         (txObj, resultSet) => {
+          // run when insert is successful
+          storePassword();
           navigation.goBack();
         },
         (txObj, error) => console.log(error)
       );
     });
+  };
+
+  const storePassword = async () => {
+    try {
+      await SecureStore.setItemAsync(description, password);
+    } catch (error) {}
   };
 
   useEffect(() => {
