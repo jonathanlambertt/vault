@@ -28,7 +28,7 @@ const Stack = createNativeStackNavigator();
 const db = SQLite.openDatabase("vault.db");
 
 // components
-const Password = ({ description, pKey }) => {
+const Password = ({ description, pKey, pID, navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [text, setText] = useState("Show password");
 
@@ -66,7 +66,17 @@ const Password = ({ description, pKey }) => {
           </Pressable>
         </View>
         <View style={{ marginRight: 25, justifyContent: "center" }}>
-          <Button title="Edit" color="#9370DB" />
+          <Button
+            title="Edit"
+            color="#9370DB"
+            onPress={() =>
+              navigation.navigate("EditPassword", {
+                description: description,
+                pKey: pKey,
+                pID: pID,
+              })
+            }
+          />
         </View>
       </View>
     </View>
@@ -137,7 +147,12 @@ const HomeScreen = ({ navigation }) => {
         data={passwords}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <Password description={item.description} pKey={item.key} />
+          <Password
+            description={item.description}
+            pKey={item.key}
+            pID={item.id}
+            navigation={navigation}
+          />
         )}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={loadPasswords} />
@@ -268,6 +283,28 @@ const NewPasswordScreen = ({ navigation }) => {
     </ScrollView>
   );
 };
+const EditPasswordScreen = ({ navigation, route }) => {
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <Pressable
+          style={{ marginLeft: -5 }}
+          onPress={() => navigation.goBack()}
+        >
+          <Feather name="chevron-left" size={30} color="#333" />
+        </Pressable>
+      ),
+    });
+  });
+
+  return (
+    <View>
+      <Text>{`Description: ${route.params.description}`}</Text>
+      <Text>{`pKey: ${route.params.pKey}`}</Text>
+      <Text>{`pID: ${route.params.pID}`}</Text>
+    </View>
+  );
+};
 
 export default function App() {
   useEffect(() => {
@@ -290,6 +327,11 @@ export default function App() {
             options={{
               headerTitle: () => <Logo />,
             }}
+          />
+          <Stack.Screen
+            name="EditPassword"
+            component={EditPasswordScreen}
+            options={{ title: "Edit Password" }}
           />
         </Stack.Group>
         <Stack.Group screenOptions={{ presentation: "modal" }}>
