@@ -94,10 +94,10 @@ const Logo = () => {
       <Text
         style={{
           fontFamily: "CreteRound",
-          fontSize: 29,
+          fontSize: 28,
           fontWeight: "bold",
           color: "#333",
-          marginBottom: 3,
+          marginBottom: 2,
         }}
       >
         Vault
@@ -284,6 +284,13 @@ const NewPasswordScreen = ({ navigation }) => {
   );
 };
 const EditPasswordScreen = ({ navigation, route }) => {
+  // route.params.description
+  // route.params.pKey
+  // route.params.pID
+  const [description, setDescription] = useState(route.params.description);
+  const [password, setPassword] = useState("");
+  const [saveButtonPressed, setSaveButtonPressed] = useState(false);
+
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -294,15 +301,75 @@ const EditPasswordScreen = ({ navigation, route }) => {
           <Feather name="chevron-left" size={30} color="#333" />
         </Pressable>
       ),
+      headerRight: () => (
+        <Button
+          onPress={() => console.log("update")}
+          title="Save"
+          color="#9370DB"
+          disabled={
+            (description.trim().length !== 0 &&
+              password.trim().length !== 0 &&
+              !saveButtonPressed) ||
+            (description.trim() != route.params.description &&
+              description.trim().length !== 0)
+              ? false
+              : true
+          }
+        />
+      ),
     });
   });
 
   return (
-    <View>
-      <Text>{`Description: ${route.params.description}`}</Text>
-      <Text>{`pKey: ${route.params.pKey}`}</Text>
-      <Text>{`pID: ${route.params.pID}`}</Text>
-    </View>
+    <ScrollView
+      style={{ flex: 1, backgroundColor: "#fff", paddingTop: 20 }}
+      keyboardShouldPersistTaps="always"
+    >
+      <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
+        <Text style={{ fontSize: 17, marginBottom: 5, color: "#333" }}>
+          Description
+        </Text>
+        <TextInput
+          value={description}
+          onChangeText={(text) => setDescription(text)}
+          placeholder="Update your description."
+          selectionColor="#9370DB"
+          autoFocus
+          blurOnSubmit={false}
+          placeholderTextColor="#767676"
+          style={{
+            height: 45,
+            borderWidth: 1,
+            padding: 10,
+            borderColor: "#c3c3c3",
+            borderRadius: 4,
+            fontSize: 15,
+          }}
+        />
+      </View>
+      <View style={{ marginHorizontal: 12 }}>
+        <Text style={{ fontSize: 17, marginBottom: 5, color: "#333" }}>
+          Password
+        </Text>
+        <TextInput
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          placeholder="Update your password."
+          selectionColor="#9370DB"
+          spellCheck={false}
+          blurOnSubmit={false}
+          placeholderTextColor="#767676"
+          style={{
+            height: 45,
+            borderWidth: 1,
+            padding: 10,
+            borderColor: "#c3c3c3",
+            borderRadius: 4,
+            fontSize: 15,
+          }}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
