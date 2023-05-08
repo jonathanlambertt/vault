@@ -284,12 +284,33 @@ const NewPasswordScreen = ({ navigation }) => {
   );
 };
 const EditPasswordScreen = ({ navigation, route }) => {
-  // route.params.description
-  // route.params.pKey
-  // route.params.pID
   const [description, setDescription] = useState(route.params.description);
   const [password, setPassword] = useState("");
   const [saveButtonPressed, setSaveButtonPressed] = useState(false);
+
+  const updateData = () => {
+    setSaveButtonPressed(true)
+    db.transaction((tx) => {
+      tx.executeSql(
+        "update password set description = ? where id = ?",
+        [description, route.params.pID],
+        (txObj, resultSet) => {
+          // if password has changed then update it
+          if (password) {
+            updatePassword()
+          } else {
+            navigation.goBack()
+          }
+        },
+        (txObj, error) => console.log(error)
+      );
+    });
+  }
+
+  const updatePassword = async () => {
+    await SecureStore.setItemAsync(route.params.pKey, password)
+    navigation.goBack()
+  }
 
   useEffect(() => {
     navigation.setOptions({
@@ -303,7 +324,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
       ),
       headerRight: () => (
         <Button
-          onPress={() => console.log("update")}
+          onPress={() => updateData()}
           title="Save"
           color="#9370DB"
           disabled={
