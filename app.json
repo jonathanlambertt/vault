@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Vault | Password manager",
+    "name": "Vault | Password archiver",
     "slug": "vault",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -10,7 +10,8 @@
       "config": {
         "usesNonExemptEncryption": false
       },
-      "bundleIdentifier": "com.jonathanlambert.vault"
+      "bundleIdentifier": "com.jonathanlambert.vault",
+      "buildNumber": "2"
     },
     "extra": {
       "eas": {
