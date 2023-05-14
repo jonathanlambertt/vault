@@ -9,6 +9,7 @@ import {
   TextInput,
   ScrollView,
   RefreshControl,
+  Alert,
 } from "react-native";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -28,7 +29,7 @@ const Stack = createNativeStackNavigator();
 const db = SQLite.openDatabase("vault.db");
 
 // components
-const Password = ({ description, pKey, pID, navigation }) => {
+const Password = ({ navigation, description, pKey, pID }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [text, setText] = useState("Show password");
 
@@ -278,6 +279,7 @@ const NewPasswordScreen = ({ navigation }) => {
             borderRadius: 4,
             fontSize: 15,
           }}
+          autoCapitalize="none"
         />
       </View>
     </ScrollView>
@@ -288,8 +290,26 @@ const EditPasswordScreen = ({ navigation, route }) => {
   const [password, setPassword] = useState("");
   const [saveButtonPressed, setSaveButtonPressed] = useState(false);
 
+  const createTwoButtonAlert = () =>
+    Alert.alert(
+      "Are you sure?",
+      "This will delete ALL your password data. You can't undo this.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Yes, delete",
+          onPress: () => console.log("Delete Pressed"),
+          style: "destructive",
+        },
+      ]
+    );
+
   const updateData = () => {
-    setSaveButtonPressed(true)
+    setSaveButtonPressed(true);
     db.transaction((tx) => {
       tx.executeSql(
         "update password set description = ? where id = ?",
@@ -297,20 +317,20 @@ const EditPasswordScreen = ({ navigation, route }) => {
         (txObj, resultSet) => {
           // if password has changed then update it
           if (password) {
-            updatePassword()
+            updatePassword();
           } else {
-            navigation.goBack()
+            navigation.goBack();
           }
         },
         (txObj, error) => console.log(error)
       );
     });
-  }
+  };
 
   const updatePassword = async () => {
-    await SecureStore.setItemAsync(route.params.pKey, password)
-    navigation.goBack()
-  }
+    await SecureStore.setItemAsync(route.params.pKey, password);
+    navigation.goBack();
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -325,7 +345,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
       headerRight: () => (
         <Button
           onPress={() => updateData()}
-          title="Save"
+          title="Update"
           color="#9370DB"
           disabled={
             (description.trim().length !== 0 &&
@@ -344,7 +364,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
   return (
     <ScrollView
       style={{ flex: 1, backgroundColor: "#fff", paddingTop: 20 }}
-      keyboardShouldPersistTaps="always"
+      //keyboardShouldPersistTaps="always"
     >
       <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
         <Text style={{ fontSize: 17, marginBottom: 5, color: "#333" }}>
@@ -355,7 +375,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
           onChangeText={(text) => setDescription(text)}
           placeholder="Update your description."
           selectionColor="#9370DB"
-          autoFocus
+          //autoFocus
           blurOnSubmit={false}
           placeholderTextColor="#767676"
           style={{
@@ -368,7 +388,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
           }}
         />
       </View>
-      <View style={{ marginHorizontal: 12 }}>
+      <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
         <Text style={{ fontSize: 17, marginBottom: 5, color: "#333" }}>
           Password
         </Text>
@@ -388,6 +408,22 @@ const EditPasswordScreen = ({ navigation, route }) => {
             borderRadius: 4,
             fontSize: 15,
           }}
+          autoCapitalize="none"
+        />
+      </View>
+      <View
+        style={{
+          borderTopWidth: 0.5,
+          borderTopColor: "#c3c3c3",
+          marginTop: 15,
+          marginHorizontal: 5,
+          paddingTop: 5,
+        }}
+      >
+        <Button
+          title="Delete Password"
+          color="#f08080"
+          onPress={createTwoButtonAlert}
         />
       </View>
     </ScrollView>
