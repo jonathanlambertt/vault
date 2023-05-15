@@ -195,7 +195,7 @@ const NewPasswordScreen = ({ navigation }) => {
           storePassword(key);
           navigation.goBack();
         },
-        (txObj, error) => console.log(error)
+        (txObj, error) => {}
       );
     });
   };
@@ -290,19 +290,18 @@ const EditPasswordScreen = ({ navigation, route }) => {
   const [password, setPassword] = useState("");
   const [saveButtonPressed, setSaveButtonPressed] = useState(false);
 
-  const createTwoButtonAlert = () =>
+  const showAlert = () =>
     Alert.alert(
-      "Are you sure?",
-      "This will delete ALL your password data. You can't undo this.",
+      "Delete this password?",
+      "",
       [
         {
           text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
         {
-          text: "Yes, delete",
-          onPress: () => console.log("Delete Pressed"),
+          text: "Delete",
+          onPress: () => deletePassword(),
           style: "destructive",
         },
       ]
@@ -322,7 +321,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
             navigation.goBack();
           }
         },
-        (txObj, error) => console.log(error)
+        (txObj, error) => {}
       );
     });
   };
@@ -331,6 +330,24 @@ const EditPasswordScreen = ({ navigation, route }) => {
     await SecureStore.setItemAsync(route.params.pKey, password);
     navigation.goBack();
   };
+
+  const deletePassword = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "delete from password where id = ?",
+        [route.params.pID],
+        (txObj, resultSet) => {
+          deleteFromStore()
+        },
+        (txObj, error) => {}
+      );
+    });
+  }
+
+  const deleteFromStore = async () => {
+    await SecureStore.deleteItemAsync(route.params.pKey)
+    navigation.goBack()
+  }
 
   useEffect(() => {
     navigation.setOptions({
@@ -423,7 +440,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
         <Button
           title="Delete Password"
           color="#f08080"
-          onPress={createTwoButtonAlert}
+          onPress={showAlert}
         />
       </View>
     </ScrollView>
