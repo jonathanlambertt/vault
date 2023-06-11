@@ -63,13 +63,13 @@ const Password = ({ navigation, description, pKey, pID }) => {
             {description}
           </Text>
           <Pressable onPress={() => setShowPassword(!showPassword)}>
-            <Text style={{ fontSize: 16, color: "#767676" }}>{text}</Text>
+            <Text style={{ fontSize: 16, color: "#6d6d6d" }}>{text}</Text>
           </Pressable>
         </View>
         <View style={{ marginRight: 25, justifyContent: "center" }}>
           <Button
             title="Edit"
-            color="#9370DB"
+            color="#8052d0"
             onPress={() =>
               navigation.navigate("EditPassword", {
                 description: description,
@@ -142,7 +142,7 @@ const HomeScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <View style={{ flex: 1, backgroundColor: "#f5efe0" }}>
       <FlatList
         contentContainerStyle={{ marginTop: 15 }}
         data={passwords}
@@ -191,7 +191,6 @@ const NewPasswordScreen = ({ navigation }) => {
         "insert into password (description, key) values (?, ?)",
         [description, key],
         (txObj, resultSet) => {
-          // store password in secure store when insert is successful
           storePassword(key);
           navigation.goBack();
         },
@@ -219,7 +218,7 @@ const NewPasswordScreen = ({ navigation }) => {
         <Button
           onPress={() => createNewPassword()}
           title="Save"
-          color="#9370DB"
+          color="#8052d0"
           disabled={
             description.trim().length !== 0 &&
             password.trim().length !== 0 &&
@@ -234,7 +233,7 @@ const NewPasswordScreen = ({ navigation }) => {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#fff", paddingTop: 20 }}
+      style={{ flex: 1, backgroundColor: "#f5efe0", paddingTop: 20 }}
       keyboardShouldPersistTaps="always"
     >
       <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
@@ -245,7 +244,7 @@ const NewPasswordScreen = ({ navigation }) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
           placeholder="What is this password for?"
-          selectionColor="#9370DB"
+          selectionColor="#8052d0"
           autoFocus
           blurOnSubmit={false}
           placeholderTextColor="#767676"
@@ -267,7 +266,7 @@ const NewPasswordScreen = ({ navigation }) => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           placeholder="Enter password here."
-          selectionColor="#9370DB"
+          selectionColor="#8052d0"
           spellCheck={false}
           blurOnSubmit={false}
           placeholderTextColor="#767676"
@@ -291,21 +290,17 @@ const EditPasswordScreen = ({ navigation, route }) => {
   const [saveButtonPressed, setSaveButtonPressed] = useState(false);
 
   const showAlert = () =>
-    Alert.alert(
-      "Delete this password?",
-      "",
-      [
-        {
-          text: "Cancel",
-          style: "cancel",
-        },
-        {
-          text: "Delete",
-          onPress: () => deletePassword(),
-          style: "destructive",
-        },
-      ]
-    );
+    Alert.alert("Delete this password?", "", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => deletePassword(),
+        style: "destructive",
+      },
+    ]);
 
   const updateData = () => {
     setSaveButtonPressed(true);
@@ -314,7 +309,6 @@ const EditPasswordScreen = ({ navigation, route }) => {
         "update password set description = ? where id = ?",
         [description, route.params.pID],
         (txObj, resultSet) => {
-          // if password has changed then update it
           if (password) {
             updatePassword();
           } else {
@@ -337,17 +331,17 @@ const EditPasswordScreen = ({ navigation, route }) => {
         "delete from password where id = ?",
         [route.params.pID],
         (txObj, resultSet) => {
-          deleteFromStore()
+          deleteFromStore();
         },
         (txObj, error) => {}
       );
     });
-  }
+  };
 
   const deleteFromStore = async () => {
-    await SecureStore.deleteItemAsync(route.params.pKey)
-    navigation.goBack()
-  }
+    await SecureStore.deleteItemAsync(route.params.pKey);
+    navigation.goBack();
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -363,7 +357,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
         <Button
           onPress={() => updateData()}
           title="Update"
-          color="#9370DB"
+          color="#8052d0"
           disabled={
             (description.trim().length !== 0 &&
               password.trim().length !== 0 &&
@@ -379,10 +373,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
   });
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: "#fff", paddingTop: 20 }}
-      //keyboardShouldPersistTaps="always"
-    >
+    <ScrollView style={{ flex: 1, backgroundColor: "#f5efe0", paddingTop: 20 }}>
       <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
         <Text style={{ fontSize: 17, marginBottom: 5, color: "#333" }}>
           Description
@@ -391,8 +382,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
           placeholder="Update your description."
-          selectionColor="#9370DB"
-          //autoFocus
+          selectionColor="#8052d0"
           blurOnSubmit={false}
           placeholderTextColor="#767676"
           style={{
@@ -413,7 +403,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           placeholder="Update your password."
-          selectionColor="#9370DB"
+          selectionColor="#8052d0"
           spellCheck={false}
           blurOnSubmit={false}
           placeholderTextColor="#767676"
@@ -437,11 +427,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
           paddingTop: 5,
         }}
       >
-        <Button
-          title="Delete Password"
-          color="#f08080"
-          onPress={showAlert}
-        />
+        <Button title="Delete Password" color="#d51e1e" onPress={showAlert} />
       </View>
     </ScrollView>
   );
@@ -459,7 +445,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{ headerTitleStyle: { fontSize: 17, color: "#333" } }}
+        screenOptions={{
+          headerTitleStyle: { fontSize: 17, color: "#333" },
+          headerStyle: { backgroundColor: "#f5efe0" },
+        }}
       >
         <Stack.Group>
           <Stack.Screen
