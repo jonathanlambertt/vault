@@ -11,7 +11,7 @@
         "usesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.jonathanlambert.vault",
-      "buildNumber": "4"
+      "buildNumber": "5"
     },
     "extra": {
       "eas": {
