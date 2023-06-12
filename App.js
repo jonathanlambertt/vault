@@ -1,5 +1,5 @@
 // react/react-native imports
-import { useEffect, useState } from "react";
+import { useEffect, useState, createContext, useContext } from "react";
 import {
   View,
   Text,
@@ -27,6 +27,7 @@ import { useFonts } from "expo-font";
 
 const Stack = createNativeStackNavigator();
 const db = SQLite.openDatabase("vault.db");
+const ListContext = createContext();
 
 // components
 const Password = ({ navigation, description, pKey, pID }) => {
@@ -112,18 +113,27 @@ const HomeScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [passwords, setPasswords] = useState([]);
 
+  const { updateList, setUpdateList } = useContext(ListContext);
+
   useEffect(() => {
     loadPasswords();
   }, []);
+
+  useEffect(() => {
+    if (updateList) {
+      loadPasswords();
+      setUpdateList(false);
+    }
+  }, [updateList]);
 
   const loadPasswords = () => {
     setRefreshing(true);
     db.transaction((tx) => {
       tx.executeSql("select * from password", [], (_, { rows: { _array } }) => {
         setPasswords(_array);
-        setRefreshing(false);
       });
     });
+    setRefreshing(false);
   };
 
   useEffect(() => {
@@ -179,6 +189,8 @@ const NewPasswordScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [saveButtonPressed, setSaveButtonPressed] = useState(false);
 
+  const { setUpdateList } = useContext(ListContext);
+
   const createNewPassword = () => {
     const key = uuidv4();
     storePasswordMetaData(key);
@@ -192,6 +204,7 @@ const NewPasswordScreen = ({ navigation }) => {
         [description, key],
         (txObj, resultSet) => {
           storePassword(key);
+          setUpdateList(true);
           navigation.goBack();
         },
         (txObj, error) => {}
@@ -289,6 +302,8 @@ const EditPasswordScreen = ({ navigation, route }) => {
   const [password, setPassword] = useState("");
   const [saveButtonPressed, setSaveButtonPressed] = useState(false);
 
+  const { setUpdateList } = useContext(ListContext);
+
   const showAlert = () =>
     Alert.alert("Delete this password?", "", [
       {
@@ -309,6 +324,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
         "update password set description = ? where id = ?",
         [description, route.params.pID],
         (txObj, resultSet) => {
+          setUpdateList(true);
           if (password) {
             updatePassword();
           } else {
@@ -332,6 +348,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
         [route.params.pID],
         (txObj, resultSet) => {
           deleteFromStore();
+          setUpdateList(true);
         },
         (txObj, error) => {}
       );
@@ -434,6 +451,8 @@ const EditPasswordScreen = ({ navigation, route }) => {
 };
 
 export default function App() {
+  const [updateList, setUpdateList] = useState(false);
+
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -443,36 +462,38 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerTitleStyle: { fontSize: 17, color: "#333" },
-          headerStyle: { backgroundColor: "#f5efe0" },
-        }}
-      >
-        <Stack.Group>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{
-              headerTitle: () => <Logo />,
-            }}
-          />
-          <Stack.Screen
-            name="EditPassword"
-            component={EditPasswordScreen}
-            options={{ title: "Edit Password" }}
-          />
-        </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: "modal" }}>
-          <Stack.Screen
-            name="NewPassword"
-            component={NewPasswordScreen}
-            options={{ title: "Save a Password" }}
-          />
-        </Stack.Group>
-      </Stack.Navigator>
-      <StatusBar style="auto" />
-    </NavigationContainer>
+    <ListContext.Provider value={{ updateList, setUpdateList }}>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerTitleStyle: { fontSize: 17, color: "#333" },
+            headerStyle: { backgroundColor: "#f5efe0" },
+          }}
+        >
+          <Stack.Group>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                headerTitle: () => <Logo />,
+              }}
+            />
+            <Stack.Screen
+              name="EditPassword"
+              component={EditPasswordScreen}
+              options={{ title: "Edit Password" }}
+            />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: "modal" }}>
+            <Stack.Screen
+              name="NewPassword"
+              component={NewPasswordScreen}
+              options={{ title: "Save a Password" }}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </NavigationContainer>
+    </ListContext.Provider>
   );
 }
