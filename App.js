@@ -65,13 +65,13 @@ const Password = ({ navigation, description, pKey, pID }) => {
             {description}
           </Text>
           <Pressable onPress={() => setShowPassword(!showPassword)}>
-            <Text style={{ fontSize: 16, color: "#6d6d6d" }}>{text}</Text>
+            <Text style={{ fontSize: 16, color: "#545454" }}>{text}</Text>
           </Pressable>
         </View>
         <View style={{ marginRight: 25, justifyContent: "center" }}>
           <Button
             title="Edit"
-            color="#8052d0"
+            color="#1b566e"
             onPress={() =>
               navigation.navigate("EditPassword", {
                 description: description,
@@ -228,7 +228,7 @@ const NewPasswordScreen = ({ navigation }) => {
         <Button
           onPress={() => createNewPassword()}
           title="Save"
-          color="#8052d0"
+          color="#1b566e"
           disabled={
             description.trim().length !== 0 &&
             password.trim().length !== 0 &&
@@ -254,10 +254,10 @@ const NewPasswordScreen = ({ navigation }) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
           placeholder="What is this password for?"
-          selectionColor="#8052d0"
+          selectionColor="#1b566e"
           autoFocus
           blurOnSubmit={false}
-          placeholderTextColor="#767676"
+          placeholderTextColor="#545454"
           style={{
             height: 45,
             borderWidth: 1,
@@ -276,10 +276,10 @@ const NewPasswordScreen = ({ navigation }) => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           placeholder="Enter password here."
-          selectionColor="#8052d0"
+          selectionColor="#1b566e"
           spellCheck={false}
           blurOnSubmit={false}
-          placeholderTextColor="#767676"
+          placeholderTextColor="#545454"
           style={{
             height: 45,
             borderWidth: 1,
@@ -373,7 +373,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
         <Button
           onPress={() => updateData()}
           title="Update"
-          color="#8052d0"
+          color="#1b566e"
           disabled={
             (description.trim().length !== 0 &&
               password.trim().length !== 0 &&
@@ -398,9 +398,9 @@ const EditPasswordScreen = ({ navigation, route }) => {
           value={description}
           onChangeText={(text) => setDescription(text)}
           placeholder="Update your description."
-          selectionColor="#8052d0"
+          selectionColor="#1b566e"
           blurOnSubmit={false}
-          placeholderTextColor="#767676"
+          placeholderTextColor="#545454"
           style={{
             height: 45,
             borderWidth: 1,
@@ -419,10 +419,10 @@ const EditPasswordScreen = ({ navigation, route }) => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           placeholder="Update your password."
-          selectionColor="#8052d0"
+          selectionColor="#1b566e"
           spellCheck={false}
           blurOnSubmit={false}
-          placeholderTextColor="#767676"
+          placeholderTextColor="#545454"
           style={{
             height: 45,
             borderWidth: 1,
@@ -443,7 +443,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
           paddingTop: 5,
         }}
       >
-        <Button title="Delete Password" color="#d51e1e" onPress={showAlert} />
+        <Button title="Delete Password" color="#a41717" onPress={showAlert} />
       </View>
     </ScrollView>
   );
