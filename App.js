@@ -21,6 +21,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 // expo imports
 import { StatusBar } from "expo-status-bar";
 import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import * as SQLite from "expo-sqlite";
 import * as SecureStore from "expo-secure-store";
 import { useFonts } from "expo-font";
@@ -140,19 +141,14 @@ const HomeScreen = ({ navigation }) => {
     navigation.setOptions({
       headerRight: () => (
         <Pressable onPress={() => navigation.navigate("NewPassword")}>
-          <Feather
-            name="plus"
-            size={28}
-            color="#333"
-            style={{ marginRight: 5 }}
-          />
+          <Feather name="plus" size={28} color="#333" />
         </Pressable>
       ),
     });
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#f5efe0" }}>
+    <View style={{ flex: 1, backgroundColor: "#f7f6f2" }}>
       <FlatList
         contentContainerStyle={{ marginTop: 15 }}
         data={passwords}
@@ -222,9 +218,10 @@ const NewPasswordScreen = ({ navigation }) => {
     navigation.setOptions({
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
-          <Text style={{ fontSize: 17, fontWeight: 300, color: "#333" }}>
+          {/* <Text style={{ fontSize: 17, fontWeight: 300, color: "#333" }}>
             Cancel
-          </Text>
+          </Text> */}
+          <AntDesign name="close" size={25} color="#333" />
         </Pressable>
       ),
       headerRight: () => (
@@ -246,7 +243,7 @@ const NewPasswordScreen = ({ navigation }) => {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#f5efe0", paddingTop: 20 }}
+      style={{ flex: 1, backgroundColor: "#f7f6f2", paddingTop: 20 }}
       keyboardShouldPersistTaps="always"
     >
       <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
@@ -363,11 +360,13 @@ const EditPasswordScreen = ({ navigation, route }) => {
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <Pressable
-          style={{ marginLeft: -5 }}
-          onPress={() => navigation.goBack()}
-        >
-          <Feather name="chevron-left" size={30} color="#333" />
+        <Pressable onPress={() => navigation.goBack()}>
+          <Feather
+            name="chevron-left"
+            size={30}
+            color="#333"
+            style={{ marginLeft: -10 }}
+          />
         </Pressable>
       ),
       headerRight: () => (
@@ -390,7 +389,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
   });
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "#f5efe0", paddingTop: 20 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "#f7f6f2", paddingTop: 20 }}>
       <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
         <Text style={{ fontSize: 17, marginBottom: 5, color: "#333" }}>
           Description
