@@ -2,7 +2,7 @@
   "expo": {
     "name": "Vault",
     "slug": "vault",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/icon.png",
@@ -11,7 +11,7 @@
         "usesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.jonathanlambert.vault",
-      "buildNumber": "8"
+      "buildNumber": "1"
     },
     "extra": {
       "eas": {
