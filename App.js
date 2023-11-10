@@ -10,6 +10,7 @@ import {
   ScrollView,
   RefreshControl,
   Alert,
+  SafeAreaView,
 } from "react-native";
 import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
@@ -148,9 +149,9 @@ const HomeScreen = ({ navigation }) => {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#f7f6f2" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <FlatList
-        contentContainerStyle={{ marginTop: 15 }}
+        contentContainerStyle={{ marginTop: 15, paddingBottom: 15 }}
         data={passwords}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -177,7 +178,7 @@ const HomeScreen = ({ navigation }) => {
           </Text>
         }
       />
-    </View>
+    </SafeAreaView>
   );
 };
 const NewPasswordScreen = ({ navigation }) => {
@@ -243,7 +244,7 @@ const NewPasswordScreen = ({ navigation }) => {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: "#f7f6f2", paddingTop: 20 }}
+      style={{ flex: 1, backgroundColor: "#fff", paddingTop: 20 }}
       keyboardShouldPersistTaps="always"
     >
       <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
@@ -389,7 +390,7 @@ const EditPasswordScreen = ({ navigation, route }) => {
   });
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "#f7f6f2", paddingTop: 20 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "#fff", paddingTop: 20 }}>
       <View style={{ marginHorizontal: 12, marginBottom: 15 }}>
         <Text style={{ fontSize: 17, marginBottom: 5, color: "#333" }}>
           Description
@@ -466,7 +467,7 @@ export default function App() {
         <Stack.Navigator
           screenOptions={{
             headerTitleStyle: { fontSize: 17, color: "#333" },
-            headerStyle: { backgroundColor: "#f5efe0" },
+            headerStyle: { backgroundColor: "#fff" },
           }}
         >
           <Stack.Group>
@@ -480,14 +481,14 @@ export default function App() {
             <Stack.Screen
               name="EditPassword"
               component={EditPasswordScreen}
-              options={{ title: "Edit Password" }}
+              options={{ title: "Edit password" }}
             />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: "modal" }}>
             <Stack.Screen
               name="NewPassword"
               component={NewPasswordScreen}
-              options={{ title: "Save a Password" }}
+              options={{ title: "Save a password" }}
             />
           </Stack.Group>
         </Stack.Navigator>
