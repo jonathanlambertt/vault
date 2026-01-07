@@ -15,3 +15,7 @@ of us.
 
 ## What I Focused On
 
+I wanted saving and viewing passwords to be quick and easy. To save a password,
+you only need to provide a description and the password. The home screen displays
+all saved passwords, and tapping “Show password” under a description reveals the
+password.
