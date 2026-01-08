@@ -27,7 +27,3 @@ password.
 - Delete passwords
 
 ## Reflections & Improvements
-
-After using Vault for a while, it became clear that the overall experience could
-be improved. Through research, I identified three insights to test in order to
-improve the app.
