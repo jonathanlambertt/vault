@@ -28,9 +28,9 @@ password.
 
 ## Reflections & Improvements
 
-I've learned a lot since starting this project. Through examining my mom and mes own usage
-talking with my mom, and thinking about my own pain points, I came up with three improvements
-I'm currently working on.
+I’ve learned a lot since starting this project. By examining my mom’s and my own usage, 
+talking with my mom, and reflecting on my own pain points, I identified three improvements 
+I’m currently working on.
 
 ### 1. Supporting additional account information beyond passwords
 
