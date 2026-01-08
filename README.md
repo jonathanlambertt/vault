@@ -1,6 +1,6 @@
 # Vault - A mobile password manager
 
-Vault is a mobile app for storing and managing passwords on your phone.
+Vault is a mobile app for storing and managing passwords.
 
 ## My Role
 
