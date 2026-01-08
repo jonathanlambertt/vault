@@ -28,10 +28,20 @@ password.
 
 I’ve learned a lot since starting this project. By examining my mom’s and my own usage, 
 talking with my mom, and reflecting on my own pain points, I identified three improvements 
-I’m currently working on.
+I want to implement and test to improve the app.
 
 ### 1. Supporting additional account information beyond passwords
 
+This feature feels obvious to me now, but I didn’t recognize its importance until I began the 
+redesign. My own usage of Vault, along with feedback from my mom about wanting to save usernames, 
+showed me that storing basic account information, beyond just passwords, is far more useful. This insight 
+led me to transition Vault from a simple “password saver” into a more complete account manager.
+
 ### 2. Make it easier for users to quickly find and view saved passwords
+
+This is a pain point I’ve experienced many times with the current app. The home screen displays all saved 
+passwords in chronological order. When I need a password, I often find myself scrolling through the entire list, 
+missing it, and then scrolling back up to find it. Viewing passwords is also inconvenient because I initially styled 
+the password text to be less emphasized than its description. 
 
 ### 3. Improving support for logging in and referencing account information
