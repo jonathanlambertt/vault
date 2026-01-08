@@ -4,7 +4,7 @@ Vault is a mobile app for storing and managing passwords.
 
 ## My Role
 
-Developer · Designer
+Developer & Designer
 
 ## Why I Built This
 
@@ -27,3 +27,13 @@ password.
 - Delete passwords
 
 ## Reflections & Improvements
+
+I've learned a lot since starting this project. Through examining my mom and mes own usage
+talking with my mom, and thinking about my own pain points, I came up with three improvements
+I'm currently working on.
+
+### 1. Supporting additional account information beyond passwords
+
+### 2. Make it easier for users to quickly find and view saved passwords
+
+### 3. Improving support for logging in and referencing account information
