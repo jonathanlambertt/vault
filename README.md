@@ -1,4 +1,4 @@
-# Vault - A mobile password manager
+# Vault | Password manager
 
 ## My Role
 
