@@ -44,4 +44,9 @@ passwords in chronological order. When I need a password, I often find myself sc
 missing it, and then scrolling back up to find it. Viewing passwords is also inconvenient because I initially styled 
 the password text to be less emphasized than its description. 
 
-### 3. Improving support for logging in and referencing account information
+### 3. Improving support for referencing account information
+
+In addition to requesting the ability to save usernames, my mom has also asked several times for the email associated 
+with specific accounts. As saving full accounts has become the main focus, the app’s visual design should evolve to make 
+it easier to reference any piece of account information.
+
