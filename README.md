@@ -1,5 +1,11 @@
 # Vault | Password manager
 
+<p align="center">
+  <img src="./assets/screenshots/save-password-filled.PNG" alt="Feed screen" width="260" style="margin-right: 12px;" />
+  <img src="./assets/screenshots/home-screen.PNG" alt="Link detail screen" width="260" style="margin-right: 12px;" />
+  <img src="./assets/screenshots/edit-screen.PNG" alt="Interaction screen" width="260" />
+</p>
+
 ## My Role
 
 Developer & Designer
