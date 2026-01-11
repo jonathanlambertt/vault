@@ -1,5 +1,11 @@
 # Vault | Password manager
 
+<p align="center">
+  <img src="./assets/screenshots/save-password-filled.PNG" alt="Feed screen" width="260" style="margin-right: 12px;" />
+  <img src="./assets/screenshots/home-screen.PNG" alt="Link detail screen" width="260" style="margin-right: 12px;" />
+  <img src="./assets/screenshots/edit-screen.PNG" alt="Interaction screen" width="260" />
+</p>
+
 ## My Role
 
 Developer & Designer
@@ -17,12 +23,6 @@ I wanted saving and viewing passwords to be quick and easy. To save a password,
 you only need to provide a description and the password. The home screen displays
 all saved passwords, and tapping “Show password” under a description reveals the
 password.
-
-## What the App Supports
-
-- Save passwords with descriptions
-- Edit passwords and descriptions
-- Delete passwords
 
 ## Reflections & Improvements
 
@@ -50,3 +50,8 @@ In addition to requesting the ability to save usernames, my mom has also asked s
 with specific accounts. As saving full accounts has become the main focus, the app’s visual design should evolve to make 
 it easier to reference any piece of account information.
 
+## What the App Supports
+
+- Save passwords with descriptions
+- Edit passwords and descriptions
+- Delete passwords
