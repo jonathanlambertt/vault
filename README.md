@@ -24,12 +24,6 @@ you only need to provide a description and the password. The home screen display
 all saved passwords, and tapping “Show password” under a description reveals the
 password.
 
-## What the App Supports
-
-- Save passwords with descriptions
-- Edit passwords and descriptions
-- Delete passwords
-
 ## Reflections & Improvements
 
 I’ve learned a lot since starting this project. By examining my mom’s and my own usage, 
@@ -56,3 +50,8 @@ In addition to requesting the ability to save usernames, my mom has also asked s
 with specific accounts. As saving full accounts has become the main focus, the app’s visual design should evolve to make 
 it easier to reference any piece of account information.
 
+## What the App Supports
+
+- Save passwords with descriptions
+- Edit passwords and descriptions
+- Delete passwords
