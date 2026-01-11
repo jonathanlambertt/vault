@@ -50,6 +50,16 @@ In addition to requesting the ability to save usernames, my mom has also asked s
 with specific accounts. As saving full accounts has become the main focus, the app’s visual design should evolve to make 
 it easier to reference any piece of account information.
 
+## Redesign Screenshots
+
+I’m currently prototyping the features outlined above. The following screens show early explorations of the redesigned experience.
+
+<p align="center">
+  <img src="./assets/screenshots/save-account.png" alt="Feed screen" width="260" style="margin-right: 12px;" />
+  <img src="./assets/screenshots/home-screen(update).png" alt="Link detail screen" width="260" style="margin-right: 12px;" />
+  <img src="./assets/screenshots/account-detail.png" alt="Interaction screen" width="260" />
+</p>
+
 ## What the App Supports
 
 - Save passwords with descriptions
